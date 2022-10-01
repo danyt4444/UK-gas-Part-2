@@ -1,0 +1,151 @@
+---
+title: "HW 4"
+output: pdf_document
+date: '2022-09-30'
+---
+
+```{r} 
+library(fpp)
+library(fpp2)
+library(TTR)
+
+attributes(UKgas)
+
+```
+
+
+```{r} 
+plot(UKgas)
+```
+
+```{r} 
+
+Acf(UKgas)
+
+```
+
+
+
+```{r}
+
+mean_forecast <-meanf(UKgas,5)
+plot(mean_forecast)
+```
+
+```{r}
+
+naive_forecast <- naive(UKgas, 5)
+plot(naive_forecast)
+```
+
+```{r}
+
+rwf_forecast1 <- rwf(UKgas, 5)
+plot(rwf_forecast1)
+
+```
+
+```{r}
+
+rwf_forecast2 <- rwf(UKgas, 5, drift=TRUE)
+plot(rwf_forecast2)
+
+```
+
+```{r}
+
+snaive_forecast <- snaive(UKgas, 5)
+plot(snaive_forecast)
+
+```
+
+```{r}
+MA5_forecast <- ma(UKgas, order=5)
+MA9_forecast <- ma(UKgas, order=9)
+plot(MA5_forecast)
+```
+
+```{r}
+
+plot(MA9_forecast)
+
+```
+```{r}
+
+plot(mean_forecast)
+lines(naive_forecast$mean,col="red")
+lines(rwf_forecast2$mean,col="green")
+lines(rwf_forecast1$mean,col="purple")
+lines(snaive_forecast$mean,col="black")
+lines(MA5_forecast,col="Pink")
+lines(MA9_forecast,col="Blue")
+
+```
+
+```{r}
+attributes(naive_forecast)
+```
+
+```{r}
+
+ets_forecast <- ets(UKgas)
+plot(ets_forecast)
+
+```
+
+
+You can also embed plots, for example:
+
+```{r}
+
+attributes(ets_forecast)
+
+```
+
+```{r}
+
+ets_forecast$mse
+
+```
+
+```{r}
+
+HW_forecast <- HoltWinters(UKgas)
+plot(HW_forecast)
+
+```
+
+```{r}
+
+SSE_Simple <- HoltWinters(UKgas, beta = FALSE, gamma = FALSE )
+attributes(SSE_Simple)
+
+```
+
+```{r}
+
+plot(SSE_Simple)
+
+```
+
+```{r}
+
+SSE_Simple$SSE
+head(SSE_Simple$fitted)
+
+```
+
+```{r}
+
+forecast_ets_1 <-forecast.ets(ets_forecast, h=5)
+plot(forecast_ets_1)
+
+```
+
+```{r}
+
+forecast_ets_2 <-forecast(ets_forecast, h=5)
+plot(forecast_ets_2)
+
+```
+
